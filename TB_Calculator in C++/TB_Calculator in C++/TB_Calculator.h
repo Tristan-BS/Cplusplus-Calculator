@@ -7,6 +7,8 @@
 #include <QPushButton>
 #include <QLineEdit>
 
+using namespace std;
+
 class TB_Calculator : public QMainWindow
 {
     Q_OBJECT
@@ -40,6 +42,12 @@ private slots:
     void on_quadrieren_clicked();
     void on_clear_clicked();
     void RegularExpression();
+    void normal();
+    void success();
+    void on_dez_clicked();
+    void on_binaer_clicked();
+    void Icons();
+    void INFOCentered();
     void Informationen(const QString& INFO, const QString& INFO_STAT);
     float eval(const string& expression);
 };

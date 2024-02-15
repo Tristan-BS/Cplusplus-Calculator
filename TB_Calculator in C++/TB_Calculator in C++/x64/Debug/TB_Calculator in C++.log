@@ -1,34 +1,5 @@
-﻿  TB_Calculator.cpp
+﻿  moc TB_Calculator.h
+  TB_Calculator.cpp
   main.cpp
-C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.h(44,28): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt.
-  (Quelldatei „TB_Calculator.cpp“ wird kompiliert)
-  
-C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.h(44,28): error C2143: Syntaxfehler: Es fehlt "," vor "&"
-  (Quelldatei „TB_Calculator.cpp“ wird kompiliert)
-  
-C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.h(44,28): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt.
-  (Quelldatei „main.cpp“ wird kompiliert)
-  
-C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.h(44,28): error C2143: Syntaxfehler: Es fehlt "," vor "&"
-  (Quelldatei „main.cpp“ wird kompiliert)
-  
-C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.cpp(153,24): error C2664: "float TB_Calculator::eval(const int)" : Konvertierung von Argument 1 von "std::string" in "const int" nicht möglich
-  C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.cpp(153,51):
-  Kein benutzerdefinierter Konvertierungsoperator verfügbar, der diese Konvertierung durchführen kann, oder der Operator kann nicht aufgerufen werden
-  C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.h(44,11):
-  Siehe Deklaration von "TB_Calculator::eval"
-  C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.cpp(153,24):
-  bei Anpassung der Argumentliste "(std::string)"
-  
-C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.cpp(162,22): error C2511: "float TB_Calculator::eval(const std::string &)": Überladene Memberfunktion nicht in "TB_Calculator" gefunden
-  C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.h(10,7):
-  Siehe Deklaration von "TB_Calculator"
-  
-C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.cpp(183,17): error C2352: "TB_Calculator::Informationen": Ein Aufruf einer nicht statischen Memberfunktion erfordert ein Objekt
-  C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.cpp(132,21):
-  Siehe Deklaration von "TB_Calculator::Informationen"
-  
-C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.cpp(198,13): error C2352: "TB_Calculator::Informationen": Ein Aufruf einer nicht statischen Memberfunktion erfordert ein Objekt
-  C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator in C++\TB_Calculator.cpp(132,21):
-  Siehe Deklaration von "TB_Calculator::Informationen"
-  
+  moc_TB_Calculator.cpp
+  TB_Calculator in C++.vcxproj -> C:\Users\birnst2\Desktop\KNAPP\WMS Cardiff\C++\TB_Calculator in C++\TB_Calculator in C++\x64\Debug\TB_Calculator in C++.exe
