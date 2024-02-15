@@ -1,5 +1,4 @@
-CHANGELOG
-13.02.2024
+CHANGELOG 13.02.2024
 * UI
 * Grundrechnungsarten
 * 1500ms Ergebnis in Grüner Schrift
@@ -7,7 +6,7 @@ CHANGELOG
 * Gesamte Anzeige Leeren
 
 
-15.02.2024
+CHANGELOG 15.02.2024
 * Informations Nachrichten
 * Letzte Zahl löschen
 * Quadrieren
