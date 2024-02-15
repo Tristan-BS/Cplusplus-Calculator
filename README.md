@@ -15,3 +15,6 @@ CHANGELOG 15.02.2024
 * Nur eingabe von Zahlen sowie Operatoren
 * Dezimal zu Binär
 * Binär zu Dezimal
+
+BUGS 15.02.2024
+* Wurzel ziehen ( Ergebnis immer 0 )
