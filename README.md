@@ -1,5 +1,7 @@
+CHANGELOG 12.02.2024
+* GUI
+
 CHANGELOG 13.02.2024
-* UI
 * Grundrechnungsarten
 * 1500ms Ergebnis in Grüner Schrift
 * Icons
