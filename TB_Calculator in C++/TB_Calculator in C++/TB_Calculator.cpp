@@ -15,6 +15,7 @@ using namespace std;
 #include <QObject>
 #include <QFontMetrics>
 #include <QSize>
+#include <QMap>
 
 #include <vector>
 
@@ -24,9 +25,12 @@ using namespace std;
 
 #include <sstream>
 #include <cmath>
+#include <math.h>
 #include <stdexcept>
 
 #include <QRegularExpressionValidator>
+
+#define PI 3.14159265
 
 TB_Calculator::TB_Calculator(QWidget *parent)
     : QMainWindow(parent)
@@ -38,6 +42,22 @@ TB_Calculator::TB_Calculator(QWidget *parent)
     RegularExpression();
 
     connect(ui.History, &QListWidget::itemClicked, this, &TB_Calculator::HistoryClicked);
+    connect(ui.Eingabe, &QLineEdit::textChanged, this, &TB_Calculator::onEingabeTextChanged);
+
+    connect(ui.Einheit, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
+        if (index == 0) {
+            ui.ZuG->clear();
+            ui.VonG->clear();
+            ui.VonG->addItems({ "Kilometer", "Meter", "Dezimeter", "Zentimeter", "Millimeter", "Mikrometer", "Nanometer" });
+            ui.ZuG->addItems({ "Kilometer", "Meter", "Dezimeter", "Zentimeter", "Millimeter", "Mikrometer", "Nanometer" });
+        }
+        else if (index == 1) {
+            ui.ZuG->clear();
+            ui.VonG->clear();
+            ui.VonG->addItems({ "Tonne", "Kilogramm", "Gramm", "Dekagramm", "Milligramm", "Mikrogramm" });
+            ui.ZuG->addItems({ "Tonne", "Kilogramm", "Gramm", "Dekagramm", "Milligramm", "Mikrogramm" });
+        }
+        });
 
 }
 
@@ -57,10 +77,16 @@ void TB_Calculator::normal() {
 
 void TB_Calculator::RegularExpression() {
 
-    QRegularExpression regex("[0-9+\\-*/√^.=]*");
+    QRegularExpression eingabefeld("[0-9+\\-*/√^.=()]*");
 
-    QValidator* validator = new QRegularExpressionValidator(regex, this);
+    QValidator* validator = new QRegularExpressionValidator(eingabefeld, this);
     ui.eingabefeld->setValidator(validator);
+
+    QRegularExpression Umrechnung("[0-9.]*");
+
+    QValidator* Validator = new QRegularExpressionValidator(Umrechnung, this);
+    ui.Eingabe->setValidator(Validator);
+    ui.Ausgabe->setValidator(Validator);
 
 }
 
@@ -189,16 +215,17 @@ void TB_Calculator::on_istgleich_clicked()
         ui.eingabefeld->setText(QString::number(result));
         QString fullCalculation = QString("%1 = %2").arg(expression).arg(result);
         calculate.push_back(fullCalculation);
-        ui.History->clear();
+
         for (const QString& calc : calculate) {
             ui.History->addItem(calc);
         }
         Informationen("Berechnung abgeschlossen!", "");
-        success();
-        QTimer::singleShot(1500, this, [=]() { normal(); });
-        ui.History->adjustSize();
+        success(); 
+        QTimer::singleShot(1500, this, [=]() { 
+            normal(); 
+        }); 
     }
-    catch (const std::exception& e) {
+    catch (const exception& e) {
         Informationen("Fehler beim Berechnen.", "F");
     }
 }
@@ -245,7 +272,8 @@ float TB_Calculator::eval(const string& expression) {
             result = pow(result, num);
             break;
         case '√':
-            result = sqrt(result + num);
+            Informationen("Du kannst nicht durch null Dividieren!", "F");
+            result = sqrt(num);
             break;
         default:
             Informationen("Ungültiger Operator", "F");
@@ -393,4 +421,158 @@ void TB_Calculator::keyPressEvent(QKeyEvent* e) {
     else {
         QMainWindow::keyPressEvent(e);
     }
+}
+
+QMap<QString, QMap<QString, double>> LängenTabelle = {
+    {"Kilometer", {
+        {"Kilometer", 1}, 
+        {"Meter", 1000.0}, 
+        {"Zentimeter", 100000.0}, 
+        {"Dezimeter", 10000.0}, 
+        {"Millimeter", 1000000.0}, 
+        {"Mikrometer", 1000000000.0}, 
+        {"Nanometer", 1000000000000.0} 
+}},
+
+    {"Meter", { 
+        {"Kilometer", 0.001}, 
+        {"Meter", 1},
+        {"Zentimeter", 100.0},
+        {"Dezimeter", 10.0},
+        {"Millimeter", 1000.0},
+        {"Mikrometer", 1000000.0},
+        {"Nanometer", 1000000000.0} 
+}},
+
+    {"Dezimeter", { 
+        {"Meter", 0.1}, 
+        {"Dezimeter", 1},
+        {"Zentimeter", 10.0},
+        {"Millimeter", 100.0},
+        {"Mikrometer", 100000.0},
+        {"Nanometer", 100000000.0} 
+}},
+
+    {"Zentimeter", { 
+        {"Kilometer", 0.00001}, 
+        {"Meter", 0.01}, 
+        {"Dezimeter", 0.1},
+        {"Zentimeter", 1},
+        {"Millimeter", 10.0},
+        {"Mikrometer", 10000.0},
+        {"Nanometer", 10000000.0} 
+}},
+
+    {"Millimeter", { 
+        {"Kilometer", 0.000001},
+        {"Meter", 0.001},
+        {"Dezimeter", 0.01},
+        {"Zentimeter", 0.1},
+        {"Millimeter", 1}, 
+        {"Mikrometer", 1000.0}, 
+        {"Nanometer", 1000000.0} 
+}},
+
+    {"Mikrometer", { 
+        {"Kilometer", 0.000000001},
+        {"Meter", 0.000001},
+        {"Dezimeter", 0.00001},
+        {"Zentimeter", 0.0001},
+        {"Millimeter", 0.001},
+        {"Mikrometer", 1}, 
+        {"Nanometer", 1000.0}
+}},
+
+    {"Nanometer", { 
+        {"Kilometer", 0.000000000001},
+        {"Meter", 0.000000001},
+        {"Dezimeter", 0.00000001},
+        {"Zentimeter", 0.0000001},
+        {"Millimeter", 0.000001}, 
+        {"Mikrometer", 0.001},
+        {"Nanometer", 1} 
+}}
+};
+
+QMap<QString, QMap<QString, double>> MasseTabelle = {
+    {"Tonne", { 
+        {"Tonne", 1.0},
+        {"Kilogramm", 1000.0}, 
+        {"Gramm", 1000000.0},
+        {"Dekagramm", 10000.0},
+        {"Milligramm", 1000000000.0}, 
+        {"Mikrogramm", 1000000000000.0}
+}},
+
+    {"Kilogramm", {
+        {"Tonne", 0.001},
+        {"Kilogramm", 1.0}, 
+        {"Gramm", 1000.0}, 
+        {"Dekagramm", 10.0},
+        {"Milligramm", 1000000.0},
+        {"Mikrogramm", 1000000000.0} 
+}},
+
+    {"Gramm", {
+        {"Tonne", 0.000001}, 
+        {"Kilogramm", 0.001},
+        {"Gramm", 1.0},
+        {"Dekagramm", 0.01},
+        {"Milligramm", 1000.0}, 
+        {"Mikrogramm", 1000000.0} 
+}},
+
+    {"Dekagramm", { 
+        {"Tonne", 0.0001},
+        {"Kilogramm", 0.1},
+        {"Gramm", 10.0}, 
+        {"Dekagramm", 1.0},
+        {"Milligramm", 100.0}, 
+        {"Mikrogramm", 100000.0}
+}},
+
+    {"Milligramm", { 
+        {"Tonne", 0.000000001},
+        {"Kilogramm", 0.000001},
+        {"Gramm", 0.001},
+        {"Dekagramm", 0.00001},
+        {"Milligramm", 1.0},
+        {"Mikrogramm", 1000.0} 
+}},
+
+    {"Mikrogramm", { 
+        {"Tonne", 0.000000000001},
+        {"Kilogramm", 0.000000001},
+        {"Gramm", 0.000001},
+        {"Dekagramm", 0.00000001}, 
+        {"Milligramm", 0.001}, 
+        {"Mikrogramm", 1.0} 
+}}
+};
+
+void TB_Calculator::onEingabeTextChanged(const QString& text) {
+
+    float inputValue = text.toFloat();
+
+    QString fromUnit = ui.VonG->currentText();
+    QString toUnit = ui.ZuG->currentText();
+
+    double Faktor;
+
+    if (ui.Einheit->currentIndex() == 0) {
+        Faktor = LängenTabelle[fromUnit][toUnit];
+    }
+    else if (ui.Einheit->currentIndex() == 1) {
+        Faktor = MasseTabelle[fromUnit][toUnit];
+    }
+    else {
+        Informationen("Ungültige Eingabe", "F");
+        return;
+    }
+
+    double outputValue = inputValue * Faktor;
+    ui.Ausgabe->setText(QString::number(outputValue));
+
+    QString historyEntry = QString("%1 %2 = %3 %4").arg(inputValue).arg(fromUnit).arg(outputValue).arg(toUnit);
+    ui.History->addItem(historyEntry);
 }

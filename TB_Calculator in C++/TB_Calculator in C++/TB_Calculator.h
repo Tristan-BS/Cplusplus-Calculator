@@ -54,6 +54,9 @@ private slots:
     void Icons();
     void INFOCentered();
     void HistoryClicked(QListWidgetItem* item);
+    /*void on_DecToHex_clicked();
+    void on_HexToDec_clicked();*/
+    void onEingabeTextChanged(const QString& text);
     void Informationen(const QString& INFO, const QString& INFO_STAT);
     float eval(const string& expression);
 };
