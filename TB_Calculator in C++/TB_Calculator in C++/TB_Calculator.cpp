@@ -9,6 +9,18 @@ using namespace std;
 #include <QTimer>
 #include <QString>
 #include <QStringList>
+#include <QWidget>
+#include <QMainWindow>
+#include <QKeyEvent>
+#include <QObject>
+#include <QFontMetrics>
+#include <QSize>
+
+#include <vector>
+
+
+#include <QFile>
+#include <QTextStream>
 
 #include <sstream>
 #include <cmath>
@@ -24,6 +36,9 @@ TB_Calculator::TB_Calculator(QWidget *parent)
     INFOCentered();
     Icons();
     RegularExpression();
+
+    connect(ui.History, &QListWidget::itemClicked, this, &TB_Calculator::HistoryClicked);
+
 }
 
 TB_Calculator::~TB_Calculator()
@@ -42,7 +57,7 @@ void TB_Calculator::normal() {
 
 void TB_Calculator::RegularExpression() {
 
-    QRegularExpression regex("[0-9+\\-*/√^.]*");
+    QRegularExpression regex("[0-9+\\-*/√^.=]*");
 
     QValidator* validator = new QRegularExpressionValidator(regex, this);
     ui.eingabefeld->setValidator(validator);
@@ -166,20 +181,35 @@ void TB_Calculator::Informationen(const QString& INFO, const QString& INFO_STAT)
     }
 }
 
-void TB_Calculator::on_istgleich_clicked() {
+void TB_Calculator::on_istgleich_clicked()
+{
     QString expression = ui.eingabefeld->text();
     try {
         float result = eval(expression.toStdString());
         ui.eingabefeld->setText(QString::number(result));
-        Informationen("Berechnung Abgeschlossen!", "");
+        QString fullCalculation = QString("%1 = %2").arg(expression).arg(result);
+        calculate.push_back(fullCalculation);
+        ui.History->clear();
+        for (const QString& calc : calculate) {
+            ui.History->addItem(calc);
+        }
+        Informationen("Berechnung abgeschlossen!", "");
         success();
-        QTimer::singleShot(1500, this, [=]() {
-            normal();
-            });
+        QTimer::singleShot(1500, this, [=]() { normal(); });
+        ui.History->adjustSize();
     }
-    catch (const exception& e) {
-        Informationen("Fehlgeschlagen.", "F");
+    catch (const std::exception& e) {
+        Informationen("Fehler beim Berechnen.", "F");
     }
+}
+
+void TB_Calculator::HistoryClicked(QListWidgetItem* item)
+{
+    QString calculation = item->text();
+    QString expression = calculation.section("=", 0, 0).trimmed();
+    QString result = calculation.section("=", 1).trimmed();
+
+    ui.eingabefeld->setText(expression + " = " + result);
 }
 
 float TB_Calculator::eval(const string& expression) {
@@ -215,7 +245,7 @@ float TB_Calculator::eval(const string& expression) {
             result = pow(result, num);
             break;
         case '√':
-                result = sqrt(result);
+            result = sqrt(result + num);
             break;
         default:
             Informationen("Ungültiger Operator", "F");
@@ -345,4 +375,22 @@ void TB_Calculator::on_dez_clicked() {
     QTimer::singleShot(1500, this, [=]() {
         normal();
         });
+}
+
+void TB_Calculator::keyPressEvent(QKeyEvent* e) {
+
+    int key = e->key();
+
+    if (key == Qt::Key_Enter || key == Qt::Key_Return) {
+        on_istgleich_clicked();
+    }
+    else if (key == Qt::Key_C) {
+        on_clear_clicked();
+    }
+    else if (key == Qt::Key_Control || key == Qt::Key_Shift || key == Qt::Key_Alt || key == Qt::Key_C) {
+        qDebug() << "HALLO WIE GEHT ES DIR";
+    }
+    else {
+        QMainWindow::keyPressEvent(e);
+    }
 }

@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QString>
 
 using namespace std;
 
@@ -19,6 +20,10 @@ public:
 
 private:
     Ui::TB_CalculatorClass ui;
+    vector<QString> calculate;
+
+protected:
+    void keyPressEvent(QKeyEvent* e);
 
 private slots:
     void on_eins_clicked();
@@ -48,6 +53,7 @@ private slots:
     void on_binaer_clicked();
     void Icons();
     void INFOCentered();
+    void HistoryClicked(QListWidgetItem* item);
     void Informationen(const QString& INFO, const QString& INFO_STAT);
     float eval(const string& expression);
 };

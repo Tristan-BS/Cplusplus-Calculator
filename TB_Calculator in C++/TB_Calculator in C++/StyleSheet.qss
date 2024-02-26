@@ -1,0 +1,64 @@
+/* Dark Mode Stylesheet */
+QWidget {
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+}
+ 
+QPushButton {
+    background-color: #333333;
+    color: #FFFFFF;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+QPushButton:hover {
+    background-color: #3d3d3d;
+    
+}
+ 
+QLineEdit {
+    background-color: #333333;
+    color: #FFFFFF;
+    border: 1px solid #555555;
+    border-radius: 5px;
+    padding: 5px;
+}
+ 
+QLabel {
+    color: #CCCCCC;
+}
+ 
+QCheckBox::indicator {
+    background-color: #333333;
+    border: 1px solid #555555;
+}
+ 
+QCheckBox::indicator:checked {
+    background-color: #4CAF50;
+}
+ 
+QCheckBox::indicator:checked:disabled {
+    background-color: #666666;
+}
+ 
+QCheckBox::indicator:unchecked:disabled {
+    background-color: #666666;
+}
+ 
+QRadioButton::indicator {
+    background-color: #333333;
+    border: 1px solid #555555;
+}
+ 
+QRadioButton::indicator:checked {
+    background-color: #4CAF50;
+}
+ 
+QRadioButton::indicator:checked:disabled {
+    background-color: #666666;
+}
+ 
+QRadioButton::indicator:unchecked:disabled {
+    background-color: #666666;
+}
