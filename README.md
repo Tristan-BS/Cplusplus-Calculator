@@ -21,7 +21,7 @@ BUGS 15.02.2024
 *    -> Egal ob ich am Ende eine Zahl zum Result rechne, das Ergebnis ist 0
 *    -> An dem Sonderzeichen liegt es ebenfalls nicht da es mit Buchstaben ebenfalls nicht funktioniert
 *    -> Alle anderen Rechnungen funktionieren
-26.02.204
+* 26.02.204
 * Click auf den Verlauf mit Umrechnungsarten nicht möglich
 * Beim 1. Start ergeben Umrechnungen immer nur, wenn man einmal hin und her wechselt geht dies aber
 
